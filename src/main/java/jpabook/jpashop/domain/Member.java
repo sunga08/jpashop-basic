@@ -5,15 +5,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Member {
+public class Member extends BaseEntity{
 
     @Id @GeneratedValue
     @Column(name = "MEMBER_ID")
     private Long id;
     private String name;
-    private String street;
-    private String zipcode;
 
+    @Embedded //생략가능
+    private Address address;
+
+    //member에 order 리스트를 갖고 있는게 좋은 설계는 아님 (order 리스트가 필요하면 Order에서 시작하면 됨)
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
 
@@ -33,19 +35,19 @@ public class Member {
         this.name = name;
     }
 
-    public String getStreet() {
-        return street;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
-    public String getZipcode() {
-        return zipcode;
+    public List<Order> getOrders() {
+        return orders;
     }
 
-    public void setZipcode(String zipcode) {
-        this.zipcode = zipcode;
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 }
